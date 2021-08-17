@@ -5,7 +5,9 @@
         "device": "*",
         "small-tilemaps": "github:riknoll/small-tilemaps#v0.0.1",
         "Conv": "github:dwipapapa/conv#0e7b9fb0b6a78fa8d6e2a9c8ae6cb0b91a307f83",
-        "arcade-text": "github:microsoft/arcade-text#v1.3.0"
+        "arcade-text": "github:microsoft/arcade-text#v1.3.0",
+        "tilemaps": "github:microsoft/pxt-tilemaps#v1.11.0",
+        "arcade-sprite-data": "github:microsoft/arcade-sprite-data#v0.1.0"
     },
     "files": [
         "main.blocks",
