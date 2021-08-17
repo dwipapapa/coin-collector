@@ -1,6 +1,15 @@
 namespace SpriteKind {
     export const Coin = SpriteKind.create()
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+    tiles.placeOnTile(sprite, tiles.locationInDirection(location, CollisionDirection.Right))
+    if (game.ask("Do you want to upgrade", "Coin multiplier?")) {
+        if (game.ask("For", "" + conv.ConvertNumber(Coin_Multiplier * 10) + " coins?")) {
+            Money += 0 - Coin_Multiplier * 10
+            Coin_Multiplier += 1
+        }
+    }
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -225
