@@ -1,6 +1,10 @@
 namespace SpriteKind {
     export const Coin = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    Money += 1
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy = -225
@@ -80,6 +84,7 @@ function Make_Normal_Coin () {
     tiles.placeOnRandomTile(NewCoin, assets.tile`transparency8`)
 }
 let NewCoin: Sprite = null
+let Money = 0
 let mySprite: Sprite = null
 tiles.setSmallTilemap(tilemap`level1`)
 for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
@@ -98,6 +103,14 @@ mySprite = sprites.create(img`
 mySprite.ay = 500
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
+let textSprite = textsprite.create(conv.ConvertNumber(Money), 0, 5)
+textSprite.setOutline(1, 6)
+textSprite.left = 2
+textSprite.top = 2
+textSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+game.onUpdate(function () {
+    textSprite.setText(conv.ConvertNumber(Money))
+})
 forever(function () {
     Make_Normal_Coin()
     pause(randint(100, 5000))
