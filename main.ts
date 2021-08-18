@@ -5,14 +5,22 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, l
     tiles.placeOnTile(sprite, tiles.locationInDirection(location, CollisionDirection.Right))
     if (game.ask("Do you want to upgrade", "Coin multiplier?")) {
         if (game.ask("For", "" + conv.ConvertNumber(Coin_Multiplier * 10) + " coins?")) {
-            Money += 0 - Coin_Multiplier * 10
-            Coin_Multiplier += 1
+            if (Money >= Coin_Multiplier * 10) {
+                Money += 0 - Coin_Multiplier * 10
+                Coin_Multiplier += Math.round(Coin_Multiplier * 1.5)
+            } else {
+                game.splash("Not Enough...")
+            }
         }
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.vy = -225
+    Jp += -1
+})
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite.vy = -225
+        Jp = 2
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (sprite, otherSprite) {
@@ -97,6 +105,7 @@ function Make_Normal_Coin () {
 }
 let NewCoin: Sprite = null
 let Coin_Multiplier = 0
+let Jp = 0
 let Max_Coins = 0
 let Money = 0
 let mySprite: Sprite = null
@@ -124,6 +133,7 @@ textSprite.top = 2
 textSprite.setFlag(SpriteFlag.RelativeToCamera, true)
 scene.setBackgroundColor(14)
 Max_Coins = 6
+Jp = 2
 Coin_Multiplier = 1
 game.onUpdate(function () {
     textSprite.setText(conv.ConvertNumber(Money))
