@@ -14,9 +14,24 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, l
         }
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
+    tiles.placeOnTile(sprite, tiles.locationInDirection(location, CollisionDirection.Left))
+    if (game.ask("Do you want to upgrade", "Max Coins?")) {
+        if (game.ask("For", "" + conv.ConvertNumber(Max_Coins * 3) + " coins?")) {
+            if (Money >= Max_Coins * 3) {
+                Money += 0 - Max_Coins * 3
+                Max_Coins += 5
+            } else {
+                game.splash("Not Enough...")
+            }
+        }
+    }
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.vy = -225
-    Jp += -1
+    if (Jp > 0) {
+        mySprite.vy = -225
+        Jp += -1
+    }
 })
 scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
@@ -132,7 +147,7 @@ textSprite.left = 2
 textSprite.top = 2
 textSprite.setFlag(SpriteFlag.RelativeToCamera, true)
 scene.setBackgroundColor(14)
-Max_Coins = 6
+Max_Coins = 5
 Jp = 2
 Coin_Multiplier = 1
 game.onUpdate(function () {
