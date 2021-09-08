@@ -155,5 +155,5 @@ game.onUpdate(function () {
 })
 forever(function () {
     Make_Normal_Coin()
-    pause(randint(1000, 3500))
+    pause(randint(500, 3500))
 })
